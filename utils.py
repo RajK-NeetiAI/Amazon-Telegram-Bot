@@ -12,6 +12,7 @@ def get_product_info(url: str) -> tuple:
     return : url, image_url, name, price, discount_price, percentage
     """
     asin = get_asin(url)
+    print(f'This{asin}')
     item = amazon.get_items(asin)[0]
     url = item.detail_page_url
     image_url = item.images.primary.large.url

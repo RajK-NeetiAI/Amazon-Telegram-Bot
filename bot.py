@@ -21,11 +21,13 @@ async def amazon_url_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
     text = update.message.text
 
+    print(text)
+
     try:
         url, image_url, name, price, discount_price, percentage = get_product_info(
             text)
         if price == 0.0:
-            price = f"Non ha un prezzo specificato"
+            price = f"controlla il prezzo sulla pagina del prodotto."
         else:
             price = f"{float(price):.2f}"
         emoji = random.choice(
