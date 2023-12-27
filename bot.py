@@ -1,15 +1,10 @@
-import logging
 import random
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 
 import config
 from utils import get_product_info
-
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
+from logger import amzn_bot_logger
 
 
 async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -21,7 +16,9 @@ async def amazon_url_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
     text = update.message.text
 
-    print(text)
+    amzn_bot_logger.info('A new request came...')
+    amzn_bot_logger.info(f'Chat ID -> {update.effective_chat.id}')
+    amzn_bot_logger.info(f'Message -> {text}')
 
     try:
         url, image_url, name, price, discount_price, percentage = get_product_info(
