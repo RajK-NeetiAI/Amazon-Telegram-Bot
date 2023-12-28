@@ -14,6 +14,7 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
 
 async def amazon_url_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
+    URL = update.message.text
     text = update.message.text
 
     amzn_bot_logger.info('A new request came...')
@@ -32,6 +33,7 @@ async def amazon_url_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
         text = f"{emoji} <b> {name[:40]}..."
         text += f"\n\n💰 {str(price).replace('.',',')}€ </b>"
         if discount_price == 0.0:
+            text += '\n\n'
             text += random.choice(['☘️ un ottimo prodotto', '🐺 item gagliardo',
                                    '😆 merita anche senza sconto', '🤔 e se..', 
                                    '🧙‍♂️ quasi magico', '👽 extraterrestre', '👾 superlativo', 
@@ -51,7 +53,7 @@ async def amazon_url_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
         await context.bot.send_photo(chat_id=config.CHANNEL_ID, photo=image_url,
                                      caption=text, reply_markup=button, parse_mode="HTML")
     except:
-        await context.bot.send_message(chat_id=update.effective_chat.id, text=f"The URL -> {text} is invalid, please check the URL.")
+        await context.bot.send_message(chat_id=update.effective_chat.id, text=f"The URL -> {URL} is invalid, please check the URL.")
 
 
 async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):

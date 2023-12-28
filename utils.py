@@ -12,13 +12,17 @@ def get_product_info(url: str) -> tuple:
     """
     return : url, image_url, name, price, discount_price, percentage
     """
+    amzn_bot_logger.info('Starting to fetch Amazon data.')
     asin = get_asin(url)
-    amzn_bot_logger.ingo(f'Amazon URL -> {url}')
+    amzn_bot_logger.info(f'Amazon URL -> {url}')
     amzn_bot_logger.info(f'ASIN -> {asin}')
     item = amazon.get_items(asin)[0]
     url = item.detail_page_url
+    amzn_bot_logger.info(f'URL -> {url}')
     image_url = item.images.primary.large.url
+    amzn_bot_logger.info(f'Image URL -> {image_url}')
     name = item.item_info.title.display_value
+    amzn_bot_logger.info(f'Name -> {name}')
     try:
         price = item.offers.listings[0].price.amount
     except:
